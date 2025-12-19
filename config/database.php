@@ -1,16 +1,21 @@
 <?php
+
 $host = "localhost";
 $banco = "amdigital_erp";
 $usuario = "root";
-$senha = "";
+$senha = ""; // padrão XAMPP
 
 try {
     $pdo = new PDO(
         "mysql:host=$host;dbname=$banco;charset=utf8mb4",
         $usuario,
-        $senha
+        $senha,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]
     );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("Erro de conexão");
+    die("Erro ao conectar no banco: " . $e->getMessage());
 }
+
